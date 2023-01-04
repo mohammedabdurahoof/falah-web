@@ -1,0 +1,20 @@
+.top-color {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 200px;
+    background-color: #009688;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    padding: 0px 0px 0px 30px;
+}
+
+.css-ancrnh-MuiButtonBase-root-MuiIconButton-root{
+    margin-right: 0 !important;
+}

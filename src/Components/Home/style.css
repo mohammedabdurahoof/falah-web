@@ -1,0 +1,48 @@
+.welcome{
+    padding: 20px;
+    /* color: #fff; */
+    /* background-color: #000; */
+}
+
+.progress-bar{
+    margin: 3rem 4.5rem;
+}
+
+
+.card {
+    height: 7rem;
+    margin: 20px;
+    box-shadow: #d3d3d3 0px 0px 7px 3px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.status{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.status .css-e2ixfd-MuiButtonBase-root-MuiIconButton-root{
+    margin-right: 0 !important;
+    padding: 0!important;
+}
+
+.cash-main{
+    display: flex;
+    align-items: center;
+}
+
+.blue{
+    background-color: #3B71CA;
+}
+
+.amber{
+    background-color: #ffc107;
+}
+
+.history-link{
+    cursor: pointer;
+}
