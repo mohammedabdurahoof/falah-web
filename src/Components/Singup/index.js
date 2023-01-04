@@ -1,44 +1,64 @@
 import { Button, Link, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import './style.css'
 import logo from '../../assets/images/logo.png'
+import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../firebase-config';
 
 
 function Singup() {
+    const [adno, setAdno] = useState(0)
+    const [name, setName] = useState('')
+    const [location, setLocation] = useState('')
+    const [batch, setBatch] = useState(0)
+    const [year, setYear] = useState(0)
+    const [phone, setPhone] = useState(0)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate();
 
-    const handleSubmit =(e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+
+            const user = await createUserWithEmailAndPassword(auth, email, password)
+            console.log(user);
+        } catch (error) {
+            console.error(error.message);
+        }
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <img src={logo} width={100} alt='logo'/>
-            <TextField required id="outlined-basic" label="Ad No" variant="outlined" fullWidth  type='Number'/>
-            <TextField required id="outlined-basic" label="Name" variant="outlined" fullWidth />
-            <TextField required id="outlined-basic" label="Location" variant="outlined" fullWidth />
-            <TextField required id="outlined-basic" label="Batch" variant="outlined" fullWidth type='Number' />
-            <TextField required id="outlined-basic" label="Year" variant="outlined" fullWidth type='Number' helperText="Year of complite PG / dropout" />
-            <TextField required id="outlined-basic" label="Phone" variant="outlined" fullWidth type='tel' />
-            <TextField required id="outlined-basic" label="Email" variant="outlined" fullWidth type='email' />
+            <img src={logo} width={100} alt='logo' />
+            <TextField required id="outlined-basic" label="Ad No" onChange={(e) => setAdno(e.target.value)} variant="outlined" fullWidth type='Number' />
+            <TextField required id="outlined-basic" label="Name" onChange={(e) => setName(e.target.value)} variant="outlined" fullWidth />
+            <TextField required id="outlined-basic" label="Location" onChange={(e) => setLocation(e.target.value)} variant="outlined" fullWidth />
+            <TextField required id="outlined-basic" label="Batch" onChange={(e) => setBatch(e.target.value)} variant="outlined" fullWidth type='Number' />
+            <TextField required id="outlined-basic" label="Year" onChange={(e) => setYear(e.target.value)} variant="outlined" fullWidth type='Number' helperText="Year of complite PG / dropout" />
+            <TextField required id="outlined-basic" label="Phone" onChange={(e) => setPhone(e.target.value)} variant="outlined" fullWidth type='tel' />
+            <TextField required id="outlined-basic" label="Email" onChange={(e) => setEmail(e.target.value)} variant="outlined" fullWidth type='email' />
             <TextField
                 required
                 id="outlined-password-input"
                 label="Password"
                 type="password"
                 fullWidth
+                onChange={(e) => setPassword(e.target.value)}
             />
-            <TextField
+            {/* <TextField
                 required
                 id="outlined-password-input"
                 label="Confirm Password"
                 type="password"
                 fullWidth
 
-            />
+            /> */}
 
             <Button variant="contained" type='submit' fullWidth className='submit-button'>Register</Button>
             <Typography variant="subtitle2" >
-                Do you have an account? <Link href="#">Sign In</Link>
+                Do you have an account? <u onClick={() => navigate('/login')} style={{ color: '#009688', cursor: 'pointer' }} >Sign In</u>
             </Typography>
         </form>
     )
