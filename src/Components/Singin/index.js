@@ -35,7 +35,7 @@ function Singin() {
     return (
         <form onSubmit={handleSubmit}>
             <img src={logo} width={100} alt='logo' />
-            <TextField required id="outlined-basic" label="Email" variant="outlined" onChange={(e) => setEmail(e.target.value)} fullWidth />
+            <TextField required id="outlined-basic" label="Email" variant="outlined" type={'email'} onChange={(e) => setEmail(e.target.value)} fullWidth />
             <TextField
                 required
                 onChange={(e) => setPassword(e.target.value)}

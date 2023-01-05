@@ -1,5 +1,5 @@
 import { Avatar, IconButton, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AppBarView from '../Appbar'
 import Navbar from '../Navbar'
 import './style.css'
@@ -11,17 +11,41 @@ import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
+import { auth, db } from '../../firebase-config'
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 
 function Account() {
+  const [user, setUser] = useState([])
+
+  useEffect(() => {
+    getUser()
+
+  }, [])
+
+  const getUser = async () => {
+    auth.onAuthStateChanged(async (re) => {
+      if (re) {
+        const user = await getDocs(query(collection(db, "user"), where("email", "==", re.email)));
+        user.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          const data = doc.data()
+          data['id'] = doc.id
+          setUser(data);
+        })
+      }
+    }
+    )
+  }
+
   return (
     <>
       <AppBarView />
       <div className='top-color'>
         <Typography variant='h4'>
-          527
+          {user.adno}
         </Typography>
         <Typography variant='body1'>
-          Mohammed Abdu Rahoof
+          {user.name}
         </Typography>
         <Avatar
           className='avatar'
@@ -42,7 +66,7 @@ function Account() {
           <PersonOutlineOutlinedIcon />
         </IconButton>
         <Typography variant="body1">
-          Mohammed Abdu Rahoof
+          {user.name}
         </Typography>
       </div>
       <hr />
@@ -57,7 +81,7 @@ function Account() {
           <LocationOnOutlinedIcon />
         </IconButton>
         <Typography variant="body1">
-          Nilambur
+          {user.location}
         </Typography>
       </div>
       <hr />
@@ -72,7 +96,7 @@ function Account() {
           <DateRangeOutlinedIcon />
         </IconButton>
         <Typography variant="body1">
-          26 (2025)
+          {user.batch} ({user.year})
         </Typography>
       </div>
       <hr />
@@ -87,7 +111,7 @@ function Account() {
           <LocalPhoneOutlinedIcon />
         </IconButton>
         <Typography variant="body1">
-          +918943485194
+          {user.phone}
         </Typography>
       </div>
       <hr />
@@ -102,7 +126,7 @@ function Account() {
           <EmailOutlinedIcon />
         </IconButton>
         <Typography variant="body1">
-          mohammedabdurahoof527@gmail.com
+          {user.email}
         </Typography>
       </div>
       <hr />
@@ -117,7 +141,7 @@ function Account() {
           <RemoveRedEyeOutlinedIcon />
         </IconButton>
         <Typography variant="body1">
-         Password 	&nbsp; 	&nbsp;
+          Password 	&nbsp; 	&nbsp;
         </Typography>
         <IconButton
           size="large"
