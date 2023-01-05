@@ -33,8 +33,7 @@ function Singup() {
         e.preventDefault();
         try {
 
-            const user = await createUserWithEmailAndPassword(auth, email, password)
-            await addDoc(userCollection, { adno, name, location, batch, year, phone, email, type: 'user' })
+            const user = await createUserWithEmailAndPassword(auth, email, password).then(async(user) => await addDoc(userCollection, { adno, name, location, batch, year, phone, email, type: 'user', uid: user.user.uid }))
             console.log(user);
         } catch (error) {
             console.error(error.message);
