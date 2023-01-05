@@ -1,4 +1,4 @@
-import { IconButton, Link, Typography } from '@mui/material'
+import { Button, IconButton, Link, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import AppBarView from '../Appbar'
 import Navbar from '../Navbar'
@@ -58,6 +58,19 @@ function Home() {
           <div><strong>Payment rate</strong></div>
         </CircularProgressbarWithChildren>
       </div>
+
+      <div className='card pay'>
+        <div className='cash-main'>
+            <Typography variant='body1' color={'#000'}>
+              Mark your paid cash
+            </Typography>
+        </div>
+        <div className='cash'>
+        <Button variant="contained" fullWidth className='submit-button' type='submit'>Pay</Button>
+        </div>
+      </div>
+
+
       <div className='card blue'>
         <div className='cash-main'>
           <IconButton
@@ -71,7 +84,7 @@ function Home() {
           </IconButton>
           <div className='cash'>
             <Typography variant='h6' color={'#fff'}>
-              Deposit
+              Paid
             </Typography>
             <Typography variant='body2' color={'#fff'}>
               4 month
