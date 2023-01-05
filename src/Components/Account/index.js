@@ -130,7 +130,7 @@ function Account() {
         </Typography>
       </div>
       <hr />
-      <div className='item'>
+      {/* <div className='item'>
         <IconButton
           size="large"
           edge="start"
@@ -152,7 +152,7 @@ function Account() {
         >
           <ModeEditOutlinedIcon />
         </IconButton>
-      </div>
+      </div> */}
       <Navbar value='account' />
     </>
   )

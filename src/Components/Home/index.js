@@ -13,7 +13,7 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { useNavigate } from 'react-router-dom'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { auth, db } from '../../firebase-config'
 
 
@@ -22,16 +22,27 @@ function Home() {
   const [percentage, setPercentage] = useState(0);
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState(0)
+  const [user, setUser] = useState([])
   const navigate = useNavigate();
   const paymentCollection = collection(db, 'payment')
 
   useEffect(() => {
+    let per = user.totalAmount / (user.noMonth * 100) * 100;
+    console.log(per);
     setTimeout(() => {
-      if (percentage < 66) {
+
+      if (percentage < per) {
         setPercentage(percentage + 1);
       }
     }, 50);
-  }, [percentage]);
+  }, [percentage, user]);
+
+  useEffect(() => {
+
+    getUser()
+
+  }, [])
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,17 +55,72 @@ function Home() {
   const handlePay = async () => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        await addDoc(paymentCollection, { uid:user.uid,amount,date:new Date(), confirmDate: 'null',status:'pending' }).then(()=>handleClose())
+        await addDoc(paymentCollection, { uid: user.uid, amount, date: new Date(), confirmDate: 'null', status: 'pending' }).then(() => handleClose())
       }
     }
     )
-    
+
   }
+
+  function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
+  }
+
+  const getUser = async () => {
+    auth.onAuthStateChanged(async (re) => {
+      if (re) {
+        const user = await getDocs(query(collection(db, "user"), where("uid", "==", re.uid)));
+        user.forEach(async (doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          const data = doc.data()
+          data['id'] = doc.id
+          var date = new Date(`${data.date}`)
+          console.log(date);
+          data['noMonth'] = monthDiff(date, new Date())
+          console.log(data.year);
+          const history = await getDocs(query(collection(db, "payment"), where("uid", "==", re.uid)));
+          var totalAmount = 0
+          history.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            totalAmount += parseFloat(doc.get('amount'))
+          })
+          data['totalAmount'] = totalAmount
+          setUser(data);
+        })
+      }
+    }
+    )
+  }
+
+
 
 
   return (
     <>
       <AppBarView />
+      <div className='top-area'>
+
+      <div className='no-month'>
+        <Typography variant='h6' color={'#3b71ca'}>
+          {user.noMonth}
+        </Typography>
+        <Typography variant='h6' color={'#3b71ca'}>
+          Month
+        </Typography>
+      </div>
+      <div className='total-amount'>
+        <Typography variant='h6' color={'#ffc107'}>
+        {user.noMonth && user.noMonth*100}
+        </Typography>
+        <Typography variant='h6' color={'#ffc107'}>
+          Amount
+        </Typography>
+      </div>
+      </div>
       <div className='progress-bar'>
         {/* <Typography variant='h5'>
       Hi!
@@ -62,6 +128,7 @@ function Home() {
     <Typography variant='h6'>
       Mohammed Abdu Rahoof
     </Typography> */}
+
         <CircularProgressbarWithChildren
           value={percentage}
           // text={`${percentage}%`}
@@ -105,7 +172,7 @@ function Home() {
             <Input
               type='number'
               id="standard-adornment-amount"
-              onChange={(e)=>setAmount(e.target.value)}
+              onChange={(e) => setAmount(e.target.value)}
               startAdornment={<InputAdornment position="start">₹</InputAdornment>}
             />
           </FormControl>
@@ -133,13 +200,13 @@ function Home() {
               Paid
             </Typography>
             <Typography variant='body2' color={'#fff'}>
-              4 month
+              {Math.floor(parseFloat(user.totalAmount) / 100)} month
             </Typography>
           </div>
         </div>
         <div className='cash'>
           <Typography variant='h6' color={'#00ff65'}>
-            ₹ 100.00
+            ₹ {user.totalAmount}.00
           </Typography>
         </div>
       </div>
@@ -159,13 +226,13 @@ function Home() {
               Debit
             </Typography>
             <Typography variant='body2' color={'#fff'}>
-              4 month
+              {Math.floor((parseFloat(user.noMonth) * 100 - parseFloat(user.totalAmount)) / 100)} month
             </Typography>
           </div>
         </div>
         <div className='cash'>
           <Typography variant='h6' color={'#c30000'}>
-            ₹ 100.00
+            ₹ {parseFloat(user.noMonth) * 100 - parseFloat(user.totalAmount)}.00
           </Typography>
         </div>
       </div>

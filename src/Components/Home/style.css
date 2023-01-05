@@ -1,6 +1,4 @@
-
-
-.progress-bar{
+.progress-bar {
     margin: 3rem 4.5rem;
 }
 
@@ -15,35 +13,55 @@
     justify-content: space-around;
 }
 
-.status{
+.status {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.status .css-e2ixfd-MuiButtonBase-root-MuiIconButton-root{
+.status .css-e2ixfd-MuiButtonBase-root-MuiIconButton-root {
     margin-right: 0 !important;
-    padding: 0!important;
+    padding: 0 !important;
 }
 
-.cash-main{
+.cash-main {
     display: flex;
     align-items: center;
 }
 
-.blue{
+.blue {
     background-color: #3B71CA;
 }
 
-.amber{
+.amber {
     background-color: #ffc107;
 }
 
-.history-link{
+.history-link {
     cursor: pointer;
     margin: 0 0 4rem 0;
 }
 
-.pay{
+.pay {
     height: 3.5rem;
+}
+
+.no-month {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.total-amount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top-area {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 90%;
+    margin: 1.5rem 1rem;
 }
