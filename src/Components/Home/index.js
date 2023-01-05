@@ -71,7 +71,7 @@ function Home() {
           </IconButton>
           <div className='cash'>
             <Typography variant='h6' color={'#fff'}>
-              Debit
+              Deposit
             </Typography>
             <Typography variant='body2' color={'#fff'}>
               4 month
@@ -97,7 +97,7 @@ function Home() {
           </IconButton>
           <div className='cash'>
             <Typography variant='h6' color={'#fff'}>
-              Credit
+              Debit
             </Typography>
             <Typography variant='body2' color={'#fff'}>
               4 month
@@ -110,7 +110,7 @@ function Home() {
           </Typography>
         </div>
       </div>
-      <div className='history-link' onClick={()=>navigate('/history')}>
+      <div className='history-link' onClick={() => navigate('/history')}>
         <Typography variant='subtitle1' color={'#009688'} align={'center'}>
           <u>See History</u>
         </Typography>

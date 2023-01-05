@@ -1,10 +1,11 @@
 import { Button, Link, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
 import logo from '../../assets/images/logo.png'
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../firebase-config';
+import { auth, db } from '../../firebase-config';
+import { addDoc, collection } from 'firebase/firestore';
 
 
 function Singup() {
@@ -17,12 +18,23 @@ function Singup() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
+    const userCollection = collection(db, 'user')
+
+    useEffect(() => {
+        auth.onAuthStateChanged(function (user) {
+            if (user) {
+                // User is signed in.
+                navigate('/home')
+            }
+        });
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
 
             const user = await createUserWithEmailAndPassword(auth, email, password)
+            await addDoc(userCollection, { adno, name, location, batch, year, phone, email, type: 'user' })
             console.log(user);
         } catch (error) {
             console.error(error.message);

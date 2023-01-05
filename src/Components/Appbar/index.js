@@ -6,10 +6,21 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase-config';
+import { useNavigate } from 'react-router-dom';
 
 export default function AppBarView() {
+  const navigate = useNavigate();
 
-  const logout = async()=>{
+  React.useEffect(() => {
+    auth.onAuthStateChanged(function (user) {
+      if (!user) {
+        // User is signed in.
+        navigate('/login')
+      }
+    });
+  }, [])
+
+  const logout = async () => {
     await signOut(auth)
   }
 

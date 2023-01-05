@@ -1,5 +1,5 @@
 import { Button, Link, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
 import logo from '../../assets/images/logo.png'
 import { useNavigate } from 'react-router-dom'
@@ -10,6 +10,16 @@ function Singin() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
+
+    useEffect(() => {
+        auth.onAuthStateChanged(function (user) {
+            if (user) {
+                // User is signed in.
+                navigate('/home')
+            }
+        });
+    }, [])
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
