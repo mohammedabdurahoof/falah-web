@@ -20,7 +20,7 @@ function Account() {
                 const user = await getDocs(query(collection(db, "user"), where("uid", "==", re.uid)));
                 user.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.get('type'));
+                    // console.log(doc.get('type'));
                     if (doc.get('type') === 'admin') {
                         setAdmin(true)
                     } else {

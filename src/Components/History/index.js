@@ -7,7 +7,7 @@ import { Button, IconButton, Typography } from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import { auth, db } from '../../firebase-config';
-import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
 
 function History() {
   const [data, setData] = useState([])
@@ -24,7 +24,7 @@ function History() {
         cUser.forEach(async (docss) => {
           // doc.data() is never undefined for query doc snapshots
           if (docss.get('type') === 'admin') {
-            var adminHistory = await getDocs(collection(db, "payment"));
+            var adminHistory = await getDocs(query(collection(db, "payment"),orderBy("date", "desc")));
             var adminHistoryArr = []
             adminHistory.forEach(async(doc) => {
               // doc.data() is never undefined for query doc snapshots
