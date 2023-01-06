@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import Singin from './Components/Singin'
 import Singup from './Components/Singup';
