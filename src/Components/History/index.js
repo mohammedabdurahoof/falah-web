@@ -11,19 +11,58 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 
 function History() {
   const [data, setData] = useState([])
+  const [admin, setAdmin] = useState(false)
+
+
+  const getUser = async () => {
+    auth.onAuthStateChanged(async (re) => {
+      if (re) {
+        const user = await getDocs(query(collection(db, "user"), where("uid", "==", re.uid)));
+        user.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.get('type'));
+          if (doc.get('type') == 'admin') {
+            setAdmin(true)
+          } else {
+            setAdmin(false)
+          }
+        })
+      }
+    }
+    )
+  }
 
   const getData = () => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const history = await getDocs(query(collection(db, "payment"), where("uid", "==", user.uid)));
-        var historyArr = []
-        history.forEach((doc) => {
+        const cUser = await getDocs(query(collection(db, "user"), where("uid", "==", user.uid)));
+        // var history;
+        cUser.forEach(async (doc) => {
           // doc.data() is never undefined for query doc snapshots
-          const data = doc.data()
-          data['id'] = doc.id
-          historyArr.push(data)
+          if (doc.get('type') == 'admin') {
+            var history = await getDocs(collection(db, "payment"));
+            var historyArr = []
+            history.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              const data = doc.data()
+              data['id'] = doc.id
+              historyArr.push(data)
+            })
+            setData(historyArr);
+          } else {
+            var history = await getDocs(query(collection(db, "payment"), where("uid", "==", user.uid)));
+            var historyArr = []
+            history.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              const data = doc.data()
+              data['id'] = doc.id
+              historyArr.push(data)
+            })
+            setData(historyArr);
+          }
         })
-        setData(historyArr);
+
+
       }
     }
     )
