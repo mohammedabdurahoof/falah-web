@@ -1,18 +1,13 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, IconButton, Input, InputAdornment, InputLabel, Link, TextField, Typography } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import AppBarView from '../Appbar'
 import Navbar from '../Navbar'
 import './style.css'
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
-import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { useNavigate } from 'react-router-dom'
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { auth, db } from '../../firebase-config'
 

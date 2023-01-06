@@ -1,7 +1,5 @@
 import { Avatar, IconButton, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import AppBarView from '../Appbar'
-import Navbar from '../Navbar'
 import './style.css'
 import avatar from '../../assets/images/avatar.jpg'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -9,10 +7,8 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { auth, db } from '../../firebase-config'
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 function User() {
   const [user, setUser] = useState([])

@@ -2,7 +2,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { db } from '../../firebase-config';
-import { columns, getData } from './data';
+import { columns } from './data';
 
 export default function Admin() {
     const [rows, setRows] = useState([])

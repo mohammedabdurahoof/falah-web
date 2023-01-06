@@ -8,6 +8,9 @@ export const theme = createTheme ({
     },
     secondary: {
       main: amber[800]
+    },
+    success:{
+      main:'#3B71CA'
     }
   }
 });
