@@ -21,7 +21,8 @@ export default function AppBarView() {
   }, [])
 
   const logout = async () => {
-    await signOut(auth)
+    await signOut(auth).then(()=>window.location.reload())
+    
   }
 
   return (

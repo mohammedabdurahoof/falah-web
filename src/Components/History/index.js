@@ -67,6 +67,7 @@ function History() {
   const confrim = async (id) => {
     await updateDoc(doc(db, "payment", id), {
       status: 'confrimed',
+      confirmDate: new Date()
     }).then(() => getData());
 
   }

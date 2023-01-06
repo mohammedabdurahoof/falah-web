@@ -17,7 +17,7 @@ function Account() {
     const getUser = async () => {
         auth.onAuthStateChanged(async (re) => {
             if (re) {
-                const user = await getDocs(query(collection(db, "user"), where("uid", "===", re.uid)));
+                const user = await getDocs(query(collection(db, "user"), where("uid", "==", re.uid)));
                 user.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
                     console.log(doc.get('type'));
