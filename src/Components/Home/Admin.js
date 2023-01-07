@@ -1,7 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, Input, InputAdornment, InputLabel, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import './style.css'
-import AddCardIcon from '@mui/icons-material/AddCard';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { collection, doc, getCountFromServer, getDocs, query, setDoc, where } from 'firebase/firestore'
 import { auth, db } from '../../firebase-config'
@@ -33,8 +32,8 @@ function Admin() {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 if (amount > 0) {
-                    var user = await getDocs(query(collection(db, "user"), where("adno", "==", adno)))
-                    user.forEach(async(doc) => {
+                    var selUser = await getDocs(query(collection(db, "user"), where("adno", "==", adno)))
+                    selUser.forEach(async(doc) => {
                         await setDoc(paymentCollection, { uid: doc.get('uid'), amount, date: new Date(), confirmDate: new Date(), status: 'confrimed' }).then((re) => { handleClose(); console.log(re); getData() })
                     })
                 }
